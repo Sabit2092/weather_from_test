@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Weather</string>
+    <string name="error_title">Sorry! App is crashed</string>
+    <string name="error_message">There in a error, please try again</string>
+    <string name="error_ok_button">OK</string>
+    <string name="network_unavailable">Network is unavailable</string>
+</resources>
