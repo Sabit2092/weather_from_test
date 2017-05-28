@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.jar.Manifest;
 
@@ -19,13 +22,17 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
-        public static  final String TAG = MainActivity.class.getSimpleName();
+
+    private CurrentWeather mCurrentWeather;
+
+    public static  final String TAG = MainActivity.class.getSimpleName();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         String apiKey = "6c4761f9449b408710d19da6ecda1ef3";
-        double latitude = 9999; //43.238949;
+        double latitude = 43.238949;
         double longitude = 76.889709;
 
         String darkSkyUrl = "https://api.darksky.net/forecast/" + apiKey + "/" + latitude + "," + longitude;
@@ -50,13 +57,20 @@ public class MainActivity extends AppCompatActivity {
 
 
                     try {
-                        Log.v(TAG, response.body().string());
+                        String jsonData = response.body().string();
+                        Log.v(TAG, jsonData);
                         if (response.isSuccessful()) {
+                            mCurrentWeather = getCurrentDetailts(jsonData);
 
                         } else {
                             alertUserAboutError();
                         }
-                    } catch (IOException e) {
+                    }
+                    catch (IOException e) {
+                        Log.e(TAG, "Exception Caught: ", e);
+                    }
+
+                    catch (JSONException e) {
                         Log.e(TAG, "Exception Caught: ", e);
                     }
 
@@ -84,6 +98,26 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d(TAG, "Common logs");
     }
+
+    private CurrentWeather getCurrentDetailts(String jsonData) throws JSONException{
+        JSONObject forecast = new JSONObject(jsonData);
+        String timezone = forecast.getString("timezone");
+        Log.i(TAG, "FROM JSON" + "=" + timezone);
+
+        JSONObject currently = forecast.getJSONObject("currently");
+
+        CurrentWeather currentWeather = new CurrentWeather();
+        currentWeather.setHumidity(currently.getDouble("humidity"));
+        currentWeather.setTime(currently.getLong("Time"));
+        currentWeather.setIcon(currently.getString("icon"));
+        currentWeather.setPrecipChance(currently.getDouble("precipProbability"));
+        currentWeather.setSummary(currently.getString("summary"));
+        currentWeather.setTemperature(currently.getDouble("temperature"));
+
+       // return new CurrentWeather();
+        return currentWeather;
+    }
+
 
     private boolean isNetworkAvailable() {
         ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
