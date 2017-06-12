@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/temperatureLabel"
         android:layout_centerHorizontal="true"
-        android:text="@string/at_5_00_pm_it_will_be"
+        android:text="@string/time"
         android:textColor="#80FFFFFF"
         android:textSize="18sp"
 
@@ -99,7 +99,7 @@
                 android:id="@+id/rainLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="RAIN?"
+                android:text="ВЕРОЯТНОСТЬ ОСАДКОВ"
                 android:textAlignment="center"
                 android:textColor="@color/transparentWhite"/>
 
