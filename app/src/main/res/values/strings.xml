@@ -4,4 +4,8 @@
     <string name="error_message">There in a error, please try again</string>
     <string name="error_ok_button">OK</string>
     <string name="network_unavailable">Network is unavailable</string>
+    <string name="_100">100</string>
+    <string name="at_5_00_pm_it_will_be">At 5:00 PM it will be</string>
+    <string name="almaty">Almaty</string>
+    <string name="temperature">100</string>
 </resources>

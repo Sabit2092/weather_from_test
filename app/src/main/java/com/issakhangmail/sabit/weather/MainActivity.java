@@ -1,11 +1,16 @@
 package com.issakhangmail.sabit.weather;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -14,6 +19,8 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.jar.Manifest;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Headers;
@@ -27,13 +34,39 @@ public class MainActivity extends AppCompatActivity {
 
     public static  final String TAG = MainActivity.class.getSimpleName();
 
+    @BindView(R.id.timeLabel) TextView mTimeLabel;
+    @BindView(R.id.temperatureLabel) TextView mTemperatureLabel;
+    @BindView(R.id.humidityValue) TextView mHumidityValue;
+    @BindView(R.id.rainLabelValue) TextView mRainValue;
+    @BindView(R.id.summaryLabel) TextView mSummaryLabel;
+    @BindView(R.id.iconImageView) ImageView mIconImageView;
+    @BindView(R.id.refreshImageView) ImageView mrefreshImage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
+        final double latitude = 43.238949;
+        final double longitude = 76.889709;
+
+        mrefreshImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getForecast(latitude, longitude);
+            }
+        });
+
+
+        getForecast(latitude, longitude);
+
+        Log.d(TAG, "Common logs");
+    }
+
+    private void getForecast(double latitude, double longitude) {
         String apiKey = "6c4761f9449b408710d19da6ecda1ef3";
-        double latitude = 43.238949;
-        double longitude = 76.889709;
+
 
         String darkSkyUrl = "https://api.darksky.net/forecast/" + apiKey + "/" + latitude + "," + longitude;
 
@@ -61,6 +94,12 @@ public class MainActivity extends AppCompatActivity {
                         Log.v(TAG, jsonData);
                         if (response.isSuccessful()) {
                             mCurrentWeather = getCurrentDetailts(jsonData);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    updateDisplay();
+                                }
+                            });
 
                         } else {
                             alertUserAboutError();
@@ -95,8 +134,17 @@ public class MainActivity extends AppCompatActivity {
 
             Toast.makeText(this, R.string.network_unavailable, Toast.LENGTH_LONG).show();
         }
+    }
 
-        Log.d(TAG, "Common logs");
+    private void updateDisplay() {
+        mTemperatureLabel.setText(mCurrentWeather.getTemperature() + "");
+        mTimeLabel.setText("At " + mCurrentWeather.getFormattedTime() + " it will be");
+        mHumidityValue.setText(mCurrentWeather.getHumidity() + "");
+        mRainValue.setText(mCurrentWeather.getPrecipChance() + "%");
+        mSummaryLabel.setText(mCurrentWeather.getSummary());
+
+        Drawable drawable = getResources().getDrawable(mCurrentWeather.getIconId());
+        mIconImageView.setImageDrawable(drawable);
     }
 
     private CurrentWeather getCurrentDetailts(String jsonData) throws JSONException{

@@ -1,18 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.issakhangmail.sabit.weather.MainActivity">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="32dp"
+                android:paddingRight="32dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:background="#FFA500"
+    >
+
 
     <TextView
+        android:id="@+id/temperatureLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="@string/temperature"
+        android:textSize="150sp"
+        android:textColor="#FFFFFF"
 
-</android.support.constraint.ConstraintLayout>
+        />
+
+    <TextView
+        android:id="@+id/timeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/temperatureLabel"
+        android:layout_centerHorizontal="true"
+        android:text="@string/at_5_00_pm_it_will_be"
+        android:textColor="#80FFFFFF"
+        android:textSize="18sp"
+
+        />
+
+    <TextView
+        android:id="@+id/locationLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:text="@string/almaty"
+        android:textColor="#ffffff"
+        android:textSize="24sp"/>
+
+    <ImageView
+        android:id="@+id/iconImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/cloudy_night"
+        android:layout_alignBottom="@+id/locationLabel"
+        android:layout_toLeftOf="@+id/timeLabel"
+        android:layout_toStartOf="@+id/timeLabel"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/temperatureLabel"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:orientation="horizontal"
+        android:id="@+id/linearLayout">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/humidityLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ВЛАЖНОСТЬ"
+                android:textAlignment="center"
+                android:textColor="@color/transparentWhite"/>
+
+            <TextView
+                android:id="@+id/humidityValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0.88"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="24sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/rainLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="RAIN?"
+                android:textAlignment="center"
+                android:textColor="@color/transparentWhite"/>
+
+            <TextView
+                android:id="@+id/rainLabelValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="70%"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="24sp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/summaryLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:text="Stormy with a chance of meatbals"
+        android:textAlignment="center"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+
+        />
+
+    <ImageView
+        android:id="@+id/refreshImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        app:srcCompat="@drawable/refresh"/>
+
+</RelativeLayout>
