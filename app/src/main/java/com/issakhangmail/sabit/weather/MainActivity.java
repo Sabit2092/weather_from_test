@@ -153,9 +153,9 @@ public class MainActivity extends AppCompatActivity {
 
         //JSONObject get data from JSON
         JSONObject currently = forecast.getJSONObject("currently");
-        JSONObject timeZone = forecast.getJSONObject("timezone");
+        //JSONObject timeZone = forecast.getJSONObject("timezone");
 
-        String tTime = timezone[0];
+
         JSONObject hourly = forecast.getJSONObject("hourly");
         JSONArray data1 = hourly.getJSONArray("data");
 
@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
             currentWeather.setPrecipChance(currently.getDouble("precipProbability"));
             currentWeather.setSummary(currently.getString("summary"));
 
-            currentWeather.setTimeZone(tTime);
+            currentWeather.setTimeZone(forecast.getString("timezone"));
             currentWeather.setTemperature(c.getInt("temperature"));
 
 
