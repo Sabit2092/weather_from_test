@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.iconImageView) ImageView mIconImageView;
     @BindView(R.id.refreshImageView) ImageView mrefreshImage;
     @BindView(R.id.locationLabel) TextView mLocationLabel;
-    
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
