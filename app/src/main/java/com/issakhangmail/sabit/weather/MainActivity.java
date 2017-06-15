@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.summaryLabel) TextView mSummaryLabel;
     @BindView(R.id.iconImageView) ImageView mIconImageView;
     @BindView(R.id.refreshImageView) ImageView mrefreshImage;
+    @BindView(R.id.locationLabel) TextView mLocationLabel;
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,10 +140,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateDisplay() {
         mTemperatureLabel.setText(mCurrentWeather.getTemperature() + "");
-        mTimeLabel.setText("At " + mCurrentWeather.getFormattedTime() + " it will be");
+        mTimeLabel.setText("Время: " + mCurrentWeather.getFormattedTime());
         mHumidityValue.setText(mCurrentWeather.getHumidity() + "");
         mRainValue.setText(mCurrentWeather.getPrecipChance() + "%");
         mSummaryLabel.setText(mCurrentWeather.getSummary());
+        mLocationLabel.setText(mCurrentWeather.getTimeZone());
 
         Drawable drawable = getResources().getDrawable(mCurrentWeather.getIconId());
         mIconImageView.setImageDrawable(drawable);
@@ -162,7 +165,9 @@ public class MainActivity extends AppCompatActivity {
         currentWeather.setSummary(currently.getString("summary"));
         currentWeather.setTemperature(currently.getDouble("temperature"));
         currentWeather.setTimeZone(forecast.getString("timezone"));
-       // return new CurrentWeather();
+
+
+        // return new CurrentWeather();
         return currentWeather;
     }
 

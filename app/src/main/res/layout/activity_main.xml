@@ -17,9 +17,9 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:text="@string/temperature"
-        android:textSize="150sp"
+        android:text="--"
         android:textColor="#FFFFFF"
+        android:textSize="150sp"
 
         />
 
@@ -29,7 +29,6 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/temperatureLabel"
         android:layout_centerHorizontal="true"
-        android:text="@string/at_5_00_pm_it_will_be"
         android:textColor="#80FFFFFF"
         android:textSize="18sp"
 
@@ -42,7 +41,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="60dp"
-        android:text="@string/almaty"
+        android:text="--"
         android:textColor="#ffffff"
         android:textSize="24sp"/>
 
@@ -82,7 +81,7 @@
                 android:id="@+id/humidityValue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="0.88"
+                android:text="--"
                 android:textAlignment="center"
                 android:textColor="#ffffff"
                 android:textSize="24sp"/>
@@ -99,7 +98,7 @@
                 android:id="@+id/rainLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="RAIN?"
+                android:text="ВЕРОЯТНОСТЬ ОСАДКОВ"
                 android:textAlignment="center"
                 android:textColor="@color/transparentWhite"/>
 
@@ -107,7 +106,7 @@
                 android:id="@+id/rainLabelValue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="70%"
+                android:text="--"
                 android:textAlignment="center"
                 android:textColor="#ffffff"
                 android:textSize="24sp"/>
