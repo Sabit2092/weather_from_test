@@ -148,4 +148,13 @@
         android:contentDescription=""
         app:srcCompat="@drawable/degree"/>
 
+    <TextView
+        android:id="@+id/textUV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:text="TextView"/>
+
 </RelativeLayout>

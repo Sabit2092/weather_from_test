@@ -16,6 +16,15 @@ public class CurrentWeather {
     private double mPrecipChance;
     private String mSummary;
     private String mTimeZone;
+    private double mUV;
+
+    public double getUV() {
+        return mUV;
+    }
+
+    public void setUV(double UV) {
+        mUV = UV;
+    }
 
     public String getTimeZone() {
         return mTimeZone;

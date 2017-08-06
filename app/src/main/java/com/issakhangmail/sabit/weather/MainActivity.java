@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.jar.Manifest;
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.iconImageView) ImageView mIconImageView;
     @BindView(R.id.refreshImageView) ImageView mrefreshImage;
     @BindView(R.id.locationLabel) TextView mLocationLabel;
+    @BindView(R.id.textUV) TextView mUVLabel;
 
 
     @Override
@@ -68,29 +70,28 @@ public class MainActivity extends AppCompatActivity {
 
     private void getForecast(double latitude, double longitude) {
         String apiKey = "6c4761f9449b408710d19da6ecda1ef3";
+        String openWeatherKey = "1a89a96cb40116a6bc5fe558a81f4d15";
 
 
         String darkSkyUrl = "https://api.darksky.net/forecast/" + apiKey + "/" + latitude + "," + longitude;
-
+        String openWeatherUrl = "http://samples.openweathermap.org/data/2.5/uvi?lat="+latitude+"&lon="+longitude+"&appid="+openWeatherKey;
 
         if(isNetworkAvailable()) {
             OkHttpClient client = new OkHttpClient();
 
-            Request request = new Request.Builder().
-                    url(darkSkyUrl).
-                    build();
+            Request request = new Request.Builder().url(darkSkyUrl).build();
+            Request request2 = new Request.Builder().url(openWeatherUrl).build();
 
             Call call = client.newCall(request);
+            Call call2 = client.newCall(request2);
+
             call.enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-
                 }
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
-
-
                     try {
                         String jsonData = response.body().string();
                         Log.v(TAG, jsonData);
@@ -118,18 +119,42 @@ public class MainActivity extends AppCompatActivity {
 
                 }
 
-            /*    if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
-
-                Headers responseHeaders = response.headers();
-                for (int i = 0, size = responseHeaders.size(); i < size; i++) {
-                    System.out.println(responseHeaders.name(i) + ": " + responseHeaders.value(i));
-                }
-
-                System.out.println(response.body().string());
-            }*/
-
-
             });
+
+            call2.enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                }
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    try {
+                        String jsonData2 = response.body().string();
+                        Log.v(TAG, jsonData2);
+                        if (response.isSuccessful()) {
+                            mCurrentWeather = getCurrentDetailts(jsonData2);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    updateDisplay();
+                                }
+                            });
+
+                        } else {
+                            alertUserAboutError();
+                        }
+                    }
+                    catch (IOException e) {
+                        Log.e(TAG, "Exception Caught: ", e);
+                    }
+
+                    catch (JSONException e) {
+                        Log.e(TAG, "Exception Caught: ", e);
+                    }
+
+
+                }
+            });
+
         }
 
         else {
@@ -145,6 +170,7 @@ public class MainActivity extends AppCompatActivity {
         mRainValue.setText(mCurrentWeather.getPrecipChance() + "%");
         mSummaryLabel.setText(mCurrentWeather.getSummary());
         mLocationLabel.setText(mCurrentWeather.getTimeZone());
+        mUVLabel.setText(mCurrentWeather.getUV() + "");
 
         Drawable drawable = getResources().getDrawable(mCurrentWeather.getIconId());
         mIconImageView.setImageDrawable(drawable);
@@ -152,8 +178,10 @@ public class MainActivity extends AppCompatActivity {
 
     private CurrentWeather getCurrentDetailts(String jsonData) throws JSONException{
         JSONObject forecast = new JSONObject(jsonData);
+       // JSONObject forecast2 = new JSONObject(jsonData2);
         String timezone = forecast.getString("timezone");
         Log.i(TAG, "FROM JSON" + "=" + timezone);
+
 
         JSONObject currently = forecast.getJSONObject("currently");
 
@@ -165,11 +193,18 @@ public class MainActivity extends AppCompatActivity {
         currentWeather.setSummary(currently.getString("summary"));
         currentWeather.setTemperature(currently.getDouble("temperature"));
         currentWeather.setTimeZone(forecast.getString("timezone"));
+       // currentWeather.setUV(forecast2.getLong("value"));
 
 
-        // return new CurrentWeather();
         return currentWeather;
     }
+
+
+
+
+
+
+
 
 
     private boolean isNetworkAvailable() {
