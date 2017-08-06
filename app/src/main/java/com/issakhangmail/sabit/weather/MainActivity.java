@@ -28,6 +28,7 @@ import okhttp3.Headers;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import java.util.concurrent.;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -52,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        GetJSONTask().execute();
+
+
         final double latitude = 43.238949;
         final double longitude = 76.889709;
 
@@ -67,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d(TAG, "Common logs");
     }
+
+
 
     private void getForecast(double latitude, double longitude) {
         String apiKey = "6c4761f9449b408710d19da6ecda1ef3";
